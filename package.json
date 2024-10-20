@@ -11,7 +11,7 @@
 
     "test:pre:quest": "npm run pre:quest -- https://github.com/POLearn/victionary-everything-about-viction",
     "test:post:poap": "npm run npx tsx ./scripts/store-metadata.ts -- https://github.com/5208980/pol-template",
-    "test:post:store": "npm run post:store -- https://github.com/POLearn/victionary-everything-about-viction 1",
+    "test:post:store": "npm run post:store -- https://github.com/POLearn/victionary-everything-about-viction 2",
     "test:post:update": "npm run post:update -- https://github.com/5208980/pol-template/"
   },
   "author": "",

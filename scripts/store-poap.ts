@@ -4,7 +4,7 @@
 import * as dotenv from 'dotenv';
 dotenv.config();
 
-import { uploadToIPFS } from "../lib/chains/pinata"
+import { uploadJSONToIPFS, uploadToIPFS } from "../lib/chains/pinata"
 import {
     retrievePoapImage,
     retrievePoapMetadata
@@ -43,11 +43,11 @@ const chain = openCampusCodex.id;
             console.warn(`Replacing metadata image, ${imgUpload.IpfsHash}`)
             metadata.image = `ipfs://${imgUpload.IpfsHash}`
         }
-        // console.log("Metadata: ", metadata)
+        console.log("Metadata: ", metadata)
 
         // Upload final metadata
-        const upload = await uploadToIPFS({
-            data: blob, group: "images"
+        const upload = await uploadJSONToIPFS({
+            data: metadata
         })
         console.log("Metadata Uploaded: ", upload.IpfsHash)
 
@@ -76,6 +76,17 @@ const chain = openCampusCodex.id;
             args: [account.address, tokenId, "0x"]
         })
         console.log("Minted: ", hash)
+
+        // Add metadata
+        console.log(`Adding metadata ${upload.IpfsHash} to ${tokenId.toString()} ...`)
+        const metadataHash = await client.writeContract({
+            account,
+            address: process.env.POAP_CONTRACT as `0x${string}`,
+            abi: parseAbi(['function setURI(uint256 id, string memory newURI) external']),
+            functionName: 'setURI',
+            args: [tokenId, `ipfs://${upload.IpfsHash}`]
+        })
+        console.log("Uri: ", metadataHash)
     } catch (e: any) {
         console.log(e)
         process.exit(1);
