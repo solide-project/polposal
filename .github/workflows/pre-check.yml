@@ -1,4 +1,4 @@
-name: Validate Staking
+name: Validate Quest
 
 on:
   issues:
@@ -22,23 +22,8 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Validate Stake
-        run: npm run pre:validate -- ${{ github.event.issue.title }}
-        env:
-          GH_API_KEY: ${{ secrets.GH_API_KEY }}
-          DRPC_KEY: ${{ secrets.DRPC_KEY }}
-          POAP_CONTRACT: ${{ secrets.POAP_CONTRACT }}
-          MINTER_SK: ${{ secrets.MINTER_SK }}
-          PINATA_JWT: ${{ secrets.PINATA_JWT }}
-          GATEWAY_URL: ${{ secrets.GATEWAY_URL }}
-          MONGO_URI: ${{ secrets.MONGO_URI }}
-          DB_NAME: ${{ secrets.DB_NAME }}
-          SUBMISSION_COLLECTION_NAME: ${{ secrets.SUBMISSION_COLLECTION_NAME }}
-          USER_SUBMISSION_COLLECTION_NAME: ${{ secrets.USER_SUBMISSION_COLLECTION_NAME }}
-          QUEST_COLLECTION_NAME: ${{ secrets.QUEST_COLLECTION_NAME }}
-
       - name: Validate Quest
-        run: npm run pre:validate -- ${{ github.event.issue.title }}
+        run: npm run pre:quest -- ${{ github.event.issue.title }}
         env:
           GH_API_KEY: ${{ secrets.GH_API_KEY }}
           DRPC_KEY: ${{ secrets.DRPC_KEY }}
