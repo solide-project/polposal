@@ -1,0 +1,30 @@
+{
+  "name": "staking-reverification",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "pre:stake": "npx tsx ./scripts/validate-stake.ts",
+    "pre:quest": "npx tsx ./scripts/validate-quest.ts",
+    "post:store": "npx tsx ./scripts/store-resource.ts",
+    "post:poap": "npx tsx ./scripts/store-poap.ts",
+    "post:update": "npx tsx ./scripts/update-resource.ts",
+
+    "test:pre:quest": "npm run pre:quest -- https://github.com/POLearn/victionary-everything-about-viction",
+    "test:post:poap": "npm run npx tsx ./scripts/store-metadata.ts -- https://github.com/5208980/pol-template",
+    "test:post:store": "npm run post:store -- https://github.com/POLearn/victionary-everything-about-viction 1",
+    "test:post:update": "npm run post:update -- https://github.com/5208980/pol-template/"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "ajv": "^8.17.1",
+    "git-url-parse": "^15.0.0",
+    "mongodb": "^6.9.0",
+    "viem": "^2.21.9"
+  },
+  "devDependencies": {
+    "@types/node": "^22.5.5",
+    "dotenv": "^16.4.5"
+  }
+}
