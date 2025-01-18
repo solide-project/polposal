@@ -7,11 +7,12 @@
 import * as dotenv from 'dotenv';
 dotenv.config();
 
-import { convertImportToMongo } from "../../db-loader/src/quest/converter";
-import { POLMongoService } from "../lib/core/mongo-service";
+import { convertImportToMongo } from "../lib/polearn/core/src/converter";
 import { Course } from "../lib/db/course";
 import { validateQuest } from "../lib/utils";
 import { POLMongo } from '../lib/db/client';
+import { getConnectionString } from '../lib/core/mongo-service';
+import { Collection } from 'mongodb';
 
 // Handle Arguments
 var args = process.argv.slice(2);
@@ -23,9 +24,17 @@ if (args.length !== 1) {
 
 const uri = args[0];
 
+const chain = process.env.CHAINID
+if (!chain) {
+    console.error(`Invalid Chain ID`);
+    process.exit(1);
+}
+
+const connectionString = getConnectionString(Number(chain)) || "";
+
 (async () => {
     const service = new POLMongo({
-        connectionString: process.env.MONGO_URI || "",
+        connectionString: connectionString,
         database: process.env.DB_NAME || "",
         collections: {
             submission: process.env.SUBMISSION_COLLECTION_NAME || "",
@@ -44,6 +53,8 @@ const uri = args[0];
 
         const course = await service.courses?.getByRepo(data.metadata.owner, data.metadata.name)
         if (!course) throw new Error("Repository doesn't exist on POL");
+
+        console.log(`Making sure there is a tokenID ${course.tokenId}`)
 
         // Initialise quest metadata
         const metadata: Course = {
@@ -69,13 +80,14 @@ const uri = args[0];
          * - Deleting quest - This is simply not including it in the quest.config.json, when it did before.
          * 
          * Current implementation of updating is, removing all the quest from course and then readding from
-         * quest.config.json
+         * quest.config.json. This will invalidate all existing quests related to course and will have to resubmit
          */
         // Found all existing quest for resource and delete
         const oldQuery = { id: { $in: course.quests } };
         const oldQuests = await service.submissions?.find(oldQuery);
+        const oldQuestsValue = await oldQuests?.toArray()
 
-        if (oldQuests?.length !== course.quests.length) {
+        if (oldQuestsValue?.length !== course.quests.length) {
             console.log("Missmatch of quests. This means the old quests are not align to resource quests for some reason.")
             console.log("Consider manually deletion ...")
             console.log(course.quests)
@@ -93,7 +105,8 @@ const uri = args[0];
         metadata.quests = questIds;
         const query = { id: { $in: questIds } };
         const existings = await service.submissions?.find(query);
-        if (existings?.length !== 0) throw new Error("Failed to find existing submissions");
+        const exstingsValue = await existings?.toArray()
+        if (exstingsValue?.length !== 0) throw new Error("Failed to find existing submissions");
 
         // Storing metadata since we populate its quests. Note this is an update
         // console.log("Storing metadata ...")

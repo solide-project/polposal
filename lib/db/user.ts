@@ -24,7 +24,7 @@ export class UserCollection {
     }
 
     async insert(data: User) {
-        return this.collection.insertOne(data);
+        return await this.collection.insertOne(data);
     }
 
     async doesUserExist({

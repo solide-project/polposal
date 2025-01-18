@@ -17,7 +17,7 @@ import {
     isCorrectAddress,
     isSufficient
 } from '../lib/chains/ether';
-import { openCampusCodex } from '../lib/chains/open-campus-codex';
+import { eduChain } from '../lib/chains/chains'
 
 // Handle Arguments
 var args = process.argv.slice(2);
@@ -29,7 +29,7 @@ if (args.length !== 1) {
 
 const hash = args[0] as `0x${string}`;
 // Will change to handle test/main net
-const chain = openCampusCodex.id;
+const chain = eduChain.id;
 
 (async () => {
     try {

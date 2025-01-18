@@ -1,6 +1,6 @@
 import { execSync } from "child_process";
 import GitUrlParse from "git-url-parse";
-import { validate } from "./quest/validate";
+import { validate } from "./polearn/validator";
 
 export const retrieveQuest = async (uri: string) => {
     const parsed = GitUrlParse(uri, [])

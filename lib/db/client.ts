@@ -1,6 +1,6 @@
 import { MongoClient, } from 'mongodb'
 import { Course, CourseCollection } from './course';
-import { Deployment, Transaction, SubmissionCollection } from './submission';
+import { SubmissionType, SubmissionCollection } from './submission';
 import { UserSubmission, UserSubmissionCollection } from './user-submission';
 import { User, UserCollection } from './user';
 
@@ -56,7 +56,7 @@ export class POLMongo {
 
     async connectSubmission() {
         const collection = this.db()
-            .collection<Deployment | Transaction>(this.config.collections.submission);
+            .collection<SubmissionType>(this.config.collections.submission);
         await collection.createIndex({ id: 1 }, { unique: true });
 
         this.submissions = new SubmissionCollection(collection)

@@ -67,3 +67,14 @@ Verification will involve,
 ### Adding to POL
 
 After successful manual verification, the issue will be tagged as `completed`. This means that the team as close the issue, and when that happens. The pipeline will run `post:poap` to store information about the POAP on IPFS and on chain 
+
+
+
+---
+
+v2
+
+- test:pre:quest - Validate your poap
+- test:post:poap - Upload poap metadata to IPFS and add URI to contract
+- test:post:store - Add questing and information to DB
+- test:post:update - Updates. Will overwrite existing

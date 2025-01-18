@@ -28,20 +28,16 @@ export class CourseCollection {
     }
 
     async find(query: any) {
-        return this.collection.find(query) || []
+        return await this.collection.find(query) || []
     }
 
     async insert(data: Course) {
-        return this.collection.insertOne(data);
+        return await this.collection.insertOne(data);
     }
 
     async update(id: ObjectId, data: Course) {
-        return this.collection.updateOne({ _id: id }, { $set: data });
+        return await this.collection.updateOne({ _id: id }, { $set: data });
     }
-
-    // async delete(id: ObjectId, data: Course) {
-    //     return this.collection.deleteOne();
-    // }
 
     async getQuests(page: number = 1, pageSize: number = 25) {
         const skip = (page - 1) * pageSize;

@@ -7,8 +7,8 @@
 import * as dotenv from 'dotenv';
 dotenv.config();
 
-import { convertImportToMongo } from "../../db-loader/src/quest/converter";
-import { POLMongoService } from "../lib/core/mongo-service";
+import { convertImportToMongo } from "../lib/polearn/core/src/converter";
+import { getConnectionString } from "../lib/core/mongo-service";
 import { Course } from "../lib/db/course";
 import { validateQuest } from "../lib/utils";
 import { POLMongo } from '../lib/db/client';
@@ -28,9 +28,20 @@ const uri = args[0];
  */
 const tokenId = args[1];
 
+const chain = process.env.CHAINID
+if (!chain) {
+    console.error(`Invalid Chain ID`);
+    process.exit(1);
+}
+
+const connectionString = getConnectionString(Number(chain)) || "";
+
+console.log(`Env: ${chain}`);
+console.log(`ConnecionStrng: ${connectionString.slice(0, 15)}...`);
+
 (async () => {
     const service = new POLMongo({
-        connectionString: process.env.MONGO_URI || "",
+        connectionString: connectionString,
         database: process.env.DB_NAME || "",
         collections: {
             submission: process.env.SUBMISSION_COLLECTION_NAME || "",
@@ -48,7 +59,9 @@ const tokenId = args[1];
         // Initialise quest metadata
         const token = parseInt(tokenId)
         if (!token) {
-            throw new Error("Invalid token")
+            if (token !== 0) {  // Edge case
+                throw new Error("Invalid token")
+            }
         }
         const metadata: Course = {
             owner: data.metadata.owner,
@@ -68,17 +81,17 @@ const tokenId = args[1];
         metadata.quests = questIds;
         const query = { id: { $in: questIds } };
         const existings = await service.submissions?.find(query);
-        if (existings?.length !== 0) throw new Error("Failed to find existing submissions");
+        // if (existings?.length !== 0) throw new Error("Failed to find existing submissions");
 
         // Storing metadata since we populate its quests
         console.log("Storing metadata ...")
         await service.courses?.insert(metadata)
         console.log("Metadata stored successfully!")
 
-        // Finally store all quest generated
-        console.log("Storing quests ...")
+        // // Finally store all quest generated
+        // console.log("Storing quests ...")
         for (const quest of quests) {
-            console.log(`Storing quest: ${quest.path}`)
+            console.log(`Storing quest: ${quest.path} ${quest.id}`)
             await service.submissions?.insert(quest)
         }
 

@@ -1,9 +1,9 @@
-import { Deployment, Transaction } from "../db/submission"
-import { generateQuestId } from "./utils"
-import { QuestImport } from "./validate"
+import { QuestConfiguration } from "./interface"
+import { generateQuestId } from "./main"
+import { SubmissionType } from "./submission/interface"
 
-export const convertImportToMongo = (data: QuestImport) => {
-    const submissionItems: (Deployment | Transaction)[] = []
+export const convertImportToMongo = (data: QuestConfiguration) => {
+    const submissionItems: SubmissionType[] = []
     const githubUri = "https://github.com"
     const repoUri = `${githubUri}/${data.metadata.owner}/${data.metadata.name}`
     data.quests.forEach((quest) => {

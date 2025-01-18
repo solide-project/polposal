@@ -27,7 +27,7 @@ export class UserSubmissionCollection {
     }
 
     async insert(data: UserSubmission) {
-        return this.collection.insertOne(data);
+       await this.collection.insertOne(data);
     }
 
     async update(id: ObjectId, data: UserSubmission) {
