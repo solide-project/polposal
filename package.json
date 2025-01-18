@@ -10,9 +10,13 @@
     "post:update": "npx tsx ./scripts/update-resource.ts",
 
     "test:pre:quest": "npm run pre:quest -- https://github.com/POLearn/pol-template",
-    "test:post:poap": "npm run post:poap -- https://github.com/POLearn/pol-template 2",
-    "test:post:store": "npm run post:store -- https://github.com/POLearn/pol-template 2",
-    "test:post:update": "npm run post:update -- https://github.com/POLearn/pol-template"
+    "test:post:poap": "npm run post:poap -- https://github.com/POLearn/pol-template 0",
+    "test:post:store": "npm run post:store -- https://github.com/POLearn/pol-template 0",
+    "test:post:update": "npm run post:update -- https://github.com/POLearn/pol-template",
+
+
+    "offchain:0": "npm run post:store -- https://github.com/POLearn/pol-template 0",
+    "offchain:1": "npm run post:store -- https://github.com/POLearn/staking-ape-coin 1"
   },
   "author": "",
   "license": "ISC",
