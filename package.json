@@ -14,8 +14,10 @@
     "test:post:store": "npm run post:store -- https://github.com/POLearn/pol-template 0",
     "test:post:update": "npm run post:update -- https://github.com/POLearn/pol-template",
 
-
+    "onchain:0": "npm run post:poap -- https://github.com/POLearn/pol-template 0",
     "offchain:0": "npm run post:store -- https://github.com/POLearn/pol-template 0",
+
+    "onchain:1": "npm run post:poap -- https://github.com/POLearn/staking-ape-coin 1",
     "offchain:1": "npm run post:store -- https://github.com/POLearn/staking-ape-coin 1"
   },
   "author": "",
