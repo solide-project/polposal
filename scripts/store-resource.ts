@@ -73,6 +73,10 @@ console.log(`ConnecionStrng: ${connectionString.slice(0, 15)}...`);
             quests: []
         }
 
+        if (data.metadata.type) {
+            metadata.type = data.metadata.type
+        }
+
         // Quest 
         const quests = convertImportToMongo(data)
         console.log(`Total Quest: ${quests.length}`)

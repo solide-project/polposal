@@ -8,6 +8,7 @@ export interface QuestConfiguration {
         title: string
         image: string
         description: string
+        type?: string
     },
     quests: SubmissionType[]
 }

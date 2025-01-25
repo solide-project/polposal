@@ -12,6 +12,7 @@ export interface Course {
     description: string;
     tokenId: number;     // Token ID used for minting the NFT as a reward
     quests: string[];
+    type?: string;
 }
 
 type CourseNullable = Course | null
