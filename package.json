@@ -17,7 +17,13 @@
     "onchain:1": "npm run post:poap -- https://github.com/POLearn/staking-ape-coin 1",
     "offchain:1": "npm run post:store -- https://github.com/POLearn/staking-ape-coin 1",
     "onchain:2": "npm run post:poap -- https://github.com/POLearn/build-on-apechain 2",
-    "offchain:2": "npm run post:store -- https://github.com/POLearn/build-on-apechain 2"
+    "offchain:2": "npm run post:store -- https://github.com/POLearn/build-on-apechain 2",
+    "onchain:3": "npm run post:poap -- https://github.com/POLearn/victionary-everything-about-viction 3",
+    "offchain:3": "npm run post:store -- https://github.com/POLearn/victionary-everything-about-viction 3",
+
+    "onchain:4": "npm run post:poap -- https://github.com/POLearn/stylish-course-to-stylus 4",
+    "offchain:4": "npm run post:store -- https://github.com/POLearn/stylish-course-to-stylus 4",
+    "update:4": "npm run post:update -- https://github.com/POLearn/stylish-course-to-stylus"
   },
   "author": "",
   "license": "ISC",

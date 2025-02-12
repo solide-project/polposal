@@ -25,7 +25,10 @@ export class CourseCollection {
     }
 
     async getByRepo(owner: string, name: string): Promise<CourseNullable> {
-        return this.collection.findOne({ owner, name })
+        return this.collection.findOne({
+            owner: { $regex: new RegExp(`^${owner}$`, 'i') },
+            name: { $regex: new RegExp(`^${name}$`, 'i') }
+        })
     }
 
     async find(query: any) {

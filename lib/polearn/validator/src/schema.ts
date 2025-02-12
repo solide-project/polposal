@@ -10,7 +10,7 @@ export const $schema: any = {
                 title: { type: "string" },
                 image: { type: "string" },
                 description: { type: "string" },
-
+                type: { type: "string" },
             },
             "required": ["owner", "name", "title", "image", "description"]
         },

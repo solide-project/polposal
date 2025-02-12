@@ -67,6 +67,10 @@ const connectionString = getConnectionString(Number(chain)) || "";
             quests: []
         }
 
+        if (data.metadata.type) {
+            metadata.type = data.metadata.type
+        }
+
         /**
          * Things to consider when updating quests
          * - Changing the path of content, will change id, meaning for old user submission, 
